@@ -617,6 +617,11 @@ class DLParser(object):
             DLParser._to_concept(w_concept.curr_concept)
             for w_concept in list_tokens[1:]
         ]
+        if min(weights) < 0.0:
+            Util.error("Error: The weights must be non-negative.")
+        if max(weights) > 1.0:
+            Util.error("Error: The weights must be less than or equal to 1.")
+
         if operator == FuzzyDLKeyword.W_SUM:
             if not (sum(weights) <= 1.0):
                 Util.error(
@@ -1440,12 +1445,13 @@ class DLParser(object):
         if ConfigReader.DEBUG_PRINT:
             Util.debug(f"\t\t_show_abstract_fillers_for -> {tokens}")
         list_tokens: list = tokens.as_list()
-        ind_name: str = list_tokens[1:]
-        for role in list_tokens:
+        ind_name: str = list_tokens[0]
+        for role in list_tokens[1:]:
             if role in DLParser.kb.concrete_roles:
                 Util.error(
                     "Error: show-abstract-fillers-for can only be used with abstract roles."
                 )
+                continue
             DLParser.kb.milp.show_vars.add_abstract_filler_to_show(role, ind_name)
         return tokens
 
