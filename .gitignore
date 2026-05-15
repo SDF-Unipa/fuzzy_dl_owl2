@@ -8,6 +8,8 @@ autodoc*
 /code_stats.py
 /docstrings.json
 /docs/make_run.sh
+/run_tests.sh
+/commit.sh
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
