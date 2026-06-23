@@ -11,9 +11,14 @@ build:
     python: "3.11"
   apt_packages:
     - graphviz
+    - ghostscript
+    - texlive-extra-utils
+    - flex
+    - re2c
   jobs:
     pre_build:
       - rm -rf docs/source/api
+      - python fuzzy_dl_owl2/fuzzydl/parser/tokenizer/generate.py re2c
 
 
 # Build documentation in the "docs/" directory with Sphinx
